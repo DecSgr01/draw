@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author xyp
  * @date 2022/5/27 18:59
  */
-public class Main extends Application {
+public class DrawRectangle extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
@@ -36,17 +36,17 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
         //新建矩形
-        Rectangle r = new Rectangle();
-        root.getChildren().add(r);
+        Rectangle rectangle = new Rectangle();
+        root.getChildren().add(rectangle);
         //鼠标按下事件
         scene.setOnMousePressed(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                r.setHeight(0);
-                r.setWidth(0);
+                rectangle.setHeight(0);
+                rectangle.setWidth(0);
                 lStartX.set(event.getX());
                 lStartY.set(event.getY());
-                r.setX(lStartX.get());
-                r.setY(lStartY.get());
+                rectangle.setX(lStartX.get());
+                rectangle.setY(lStartY.get());
                 System.out.println("矩形开始坐标:" + lStartX.get() + "," + lStartY.get());
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 System.out.println("鼠标右键键按下");
@@ -61,22 +61,22 @@ public class Main extends Application {
             if (event.getButton() == MouseButton.PRIMARY) {
                 System.out.println("鼠标左键拖动");
                 if (event.getX() < lStartX.get()) {
-                    r.setX(event.getX());
+                    rectangle.setX(event.getX());
                 } else {
 
                     if (event.getX() != lStartX.get()) {
-                        r.setX(lStartX.get());
+                        rectangle.setX(lStartX.get());
                     }
                 }
                 if (event.getY() < lStartY.get()) {
-                    r.setY(event.getY());
+                    rectangle.setY(event.getY());
                 } else {
                     if (event.getY() != lStartY.get()) {
-                        r.setY(lStartY.get());
+                        rectangle.setY(lStartY.get());
                     }
                 }
-                r.setWidth(Math.abs(event.getX() - lStartX.get()));
-                r.setHeight(Math.abs(event.getY() - lStartY.get()));
+                rectangle.setWidth(Math.abs(event.getX() - lStartX.get()));
+                rectangle.setHeight(Math.abs(event.getY() - lStartY.get()));
                 System.out.println(event.getX() + "," + event.getY());
             }
         });
@@ -84,23 +84,23 @@ public class Main extends Application {
         scene.setOnMouseReleased(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 System.out.println("鼠标左键抬起");
-                if (event.getX() < r.getX()) {
-                    r.setX(event.getX());
+                if (event.getX() < rectangle.getX()) {
+                    rectangle.setX(event.getX());
                 }
                 if (event.getY() < lStartY.get()) {
-                    r.setY(event.getY());
+                    rectangle.setY(event.getY());
                 }
-                r.setWidth(Math.abs(lStartX.get() - event.getX()));
-                r.setHeight(Math.abs(lStartY.get() - event.getY()));
+                rectangle.setWidth(Math.abs(lStartX.get() - event.getX()));
+                rectangle.setHeight(Math.abs(lStartY.get() - event.getY()));
                 System.out.println(event.getX() + "," + event.getY());
             } else if (event.getButton() == MouseButton.SECONDARY) {
                 System.out.println("鼠标右键抬起");
                 rEndX.set(event.getX());
                 rEndY.set(event.getY());
                 if (Math.abs(rEndX.get() - rStartX.get()) < 10 && Math.abs(rEndY.get() - rStartY.get()) < 10) {
-                    if (r.getWidth() != 0 || r.getHeight() != 0) {
-                        r.setHeight(0);
-                        r.setWidth(0);
+                    if (rectangle.getWidth() != 0 || rectangle.getHeight() != 0) {
+                        rectangle.setHeight(0);
+                        rectangle.setWidth(0);
                     } else {
                         primaryStage.close();
                     }
